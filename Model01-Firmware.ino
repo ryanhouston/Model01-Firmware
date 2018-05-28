@@ -59,6 +59,12 @@
 // Support for host power management (suspend & wakeup)
 #include "Kaleidoscope-HostPowerManagement.h"
 
+// Support for one-shot modifiers
+#include "Kaleidoscope-OneShot.h"
+
+// Support for LED under the active modifier. Works well with OneShot sticky mods
+#include "Kaleidoscope-LED-ActiveModColor.h"
+
 
 /** This 'enum' is a list of all the macros used by the Model 01's firmware
   * The names aren't particularly important. What is important is that each
@@ -142,7 +148,7 @@ KEYMAPS(
    Key_Enter,     Key_Y, Key_U, Key_I,     Key_O,         Key_P,         Key_Equals,
                   Key_H, Key_J, Key_K,     Key_L,         Key_Semicolon, Key_Quote,
    LCTRL(Key_LeftAlt),  Key_N, Key_M, Key_Comma, Key_Period,    Key_Slash,     Key_Minus,
-   Key_RightShift, Key_LeftAlt, Key_Spacebar, Key_RightControl,
+   OSM(RightShift), Key_LeftAlt, Key_Spacebar, Key_RightControl,
    ShiftToLayer(FUNCTION)),
 
 
@@ -332,7 +338,13 @@ KALEIDOSCOPE_INIT_PLUGINS(
 
   // The HostPowerManagement plugin enables waking up the host from suspend,
   // and allows us to turn LEDs off when it goes to sleep.
-  HostPowerManagement
+  HostPowerManagement,
+
+  // The OneShot plugin adds support for one-shot modifiers
+  OneShot,
+
+  // The ActiveModColorEffect plugins adds LED highlight of the active modifier
+  ActiveModColorEffect
 );
 
 /** The 'setup' function is one of the two standard Arduino sketch functions.
@@ -360,6 +372,9 @@ void setup() {
   // see https://github.com/keyboardio/Kaleidoscope-LED-Stalker
   // StalkerEffect.variant = STALKER(BlazingTrail);
   StalkerEffect.variant = STALKER(Rainbow);
+
+  // Set the ActiveModColorEffect highlight color
+  ActiveModColorEffect.highlight_color = CRGB(0x00, 0xff, 0xff);
 
   // We want the keyboard to be able to wake the host up from suspend.
   HostPowerManagement.enableWakeup();
