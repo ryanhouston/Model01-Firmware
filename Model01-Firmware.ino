@@ -62,6 +62,9 @@
 // Support for one-shot modifiers
 #include "Kaleidoscope-OneShot.h"
 
+// Support to cancel one-shot modifiers
+#include "Kaleidoscope-Escape-OneShot.h"
+
 // Support for LED under the active modifier. Works well with OneShot sticky mods
 #include "Kaleidoscope-LED-ActiveModColor.h"
 
@@ -342,6 +345,7 @@ KALEIDOSCOPE_INIT_PLUGINS(
 
   // The OneShot plugin adds support for one-shot modifiers
   OneShot,
+  EscapeOneShot,
 
   // The ActiveModColorEffect plugins adds LED highlight of the active modifier
   ActiveModColorEffect
